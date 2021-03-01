@@ -1,4 +1,3 @@
-const cheerio = require('cheerio');
 const got = require('got');
 
 const URL = 'https://app-dev.condoworks.co/test-q1.txt';
