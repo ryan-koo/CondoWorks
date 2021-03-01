@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const downloads_folder = require('downloads-folder');
+const downloadsFolder = require('downloads-folder');
 
 const URL = 'https://app-dev.condoworks.co/';
 const user = 'coop.test@condoworks.co';
@@ -55,10 +55,10 @@ const SELECTORS = {
     }, SELECTORS, inv_no);
 
     await page.waitForSelector(SELECTORS.download_btn);
-    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloads_folder()});
+    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloadsFolder()})
     await page.click(SELECTORS.download_btn);
     await page.waitForTimeout(3000);
-    console.log(downloads_folder());
+    console.log(downloadsFolder());
 
     await page.close();
 })();
