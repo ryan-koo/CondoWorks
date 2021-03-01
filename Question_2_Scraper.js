@@ -18,6 +18,10 @@ const SELECTORS = {
     download_btn: '.kv-file-download.btn.btn-sm.btn-kv.btn-default.btn-outline-secondary'
 };
 
+const ERROR_MESSAGE = {
+    registry_js: /registry-js/,
+}
+
 (async () => {
     const browser = await puppeteer.launch({
         defaultViewport: {width: 1920, height: 1080},
@@ -55,7 +59,11 @@ const SELECTORS = {
     }, SELECTORS, inv_no);
 
     await page.waitForSelector(SELECTORS.download_btn);
-    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloadsFolder()})
+    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloadsFolder()}).catch((err) =>{
+        if (err.message.match(ERROR_MESSAGE.registry_js)){
+            throw 'May potentially need to install an older version of registry-js (1.9.0 worked for me)';
+        };
+    });
     await page.click(SELECTORS.download_btn);
     await page.waitForTimeout(3000);
     console.log(downloadsFolder());
