@@ -20,7 +20,7 @@ const SELECTORS = {
 
 const ERROR_MESSAGE = {
     registry_js: /registry-js/,
-}
+};
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -59,7 +59,8 @@ const ERROR_MESSAGE = {
     }, SELECTORS, inv_no);
 
     await page.waitForSelector(SELECTORS.download_btn);
-    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloadsFolder()}).catch((err) =>{
+    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: downloadsFolder()})
+    .catch((err) =>{
         if (err.message.match(ERROR_MESSAGE.registry_js)){
             throw 'May potentially need to install an older version of registry-js (1.9.0 worked for me)';
         };
